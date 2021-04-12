@@ -25,6 +25,7 @@ def core_args():
         "-m",
         "--module",
         metavar="Module",
+        dest="module",
         help="Select module"
     )
     group_search = parser.add_argument_group("Search")
@@ -33,6 +34,7 @@ def core_args():
         "--list",
         action='store_true',
         default=False,
+        dest="list",
         help="List modules"
     )
     group_target = parser.add_argument_group("Target")
@@ -41,11 +43,13 @@ def core_args():
         "--url",
         required=True,
         metavar="URL",
+        dest="url",
         help="""Target URL (e.g. "http://example.com/vuln.php?id=1")"""
     )
     group_target.add_argument(
         "-r",
         metavar="REQUESTFILE",
+        dest="requestfile",
         help="Load HTTP request from a file"
     )
     group_request = parser.add_argument_group("Request")
@@ -53,6 +57,7 @@ def core_args():
         "-A",
         "--user-agent",
         metavar="AGENT",
+        dest="user_agent",
         help="HTTP User-Agent header value (default: bigdig/1.0)",
         default="bigdig/1.0"
     )
@@ -60,27 +65,32 @@ def core_args():
         "-H",
         "--headers",
         metavar="HEADERS",
+        dest="headers",
         help="""Extra headers (e.g. "X-Forwarded-For: 127.0.0.1")"""
     )
     group_request.add_argument(
         "--method",
         metavar="METHOD",
+        dest="method",
         help="Force usage of given HTTP method (default: GET)",
         default="GET"
     )
     group_request.add_argument(
         "--data",
         metavar="DATA",
+        dest="data",
         help="""Data string to be sent through POST (e.g. "id=1")"""
     )
     group_request.add_argument(
         "--cookie",
         metavar="COOKIE",
+        dest="cookie",
         help="""HTTP Cookie header value (e.g. "PHPSESSID=a6s8492..")"""
     )
     group_request.add_argument(
         "--delay",
         metavar="DELAY",
+        dest="delay",
         help="Delay in seconds between each HTTP request"
     )
 
