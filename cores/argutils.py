@@ -41,7 +41,6 @@ def core_args():
     group_target.add_argument(
         "-u",
         "--url",
-        required=True,
         metavar="URL",
         dest="url",
         help="""Target URL (e.g. "http://example.com/vuln.php?id=1")"""
