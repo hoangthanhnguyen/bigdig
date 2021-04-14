@@ -1,7 +1,7 @@
 from argutils import core_args
 import re
+import os.path
 
-methods = ["GET", "POST", "PUT", "DELETE"]
 args = core_args().parse_args()
 
 
@@ -13,13 +13,27 @@ def check_module(module_name):
     except ModuleNotFoundError:
         print(f"[x] Invalid module name {module_name}. Use flag -l or --list for list all modules.")
 
+
 # TODO check request from file
+def check_requestfile(requestfile):
+    if os.path.exists(requestfile):
+        try:
+            with open("requestfile", 'r') as f:
+                pass
+        except FileNotFoundError:
+            print("[x] File " + str(requestfile) + " does not exist!")
+    else:
+        print("[x] File " + str(requestfile) + " does not exist!")
+
+
 # TODO check target
 def check_target(url, requestfile):
     if requestfile:
         print("Requestfile is exits")
     else:
         if url:
+            # regex for validate url
+            # https://stackoverflow.com/a/7160778/14934923
             regex = re.compile(
                 r'^(?:http)s?://'  # http:// or https://
                 r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
@@ -31,11 +45,6 @@ def check_target(url, requestfile):
                 return True
             else:
                 print("[x] Invalid url. Example: https://www.example.com")
-
-
-# TODO check method
-def check_method(method):
-    pass
 
 
 # TODO check headers

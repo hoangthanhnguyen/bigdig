@@ -72,7 +72,13 @@ def core_args():
         metavar="METHOD",
         dest="method",
         help="Force usage of given HTTP method (default: GET)",
-        default="GET"
+        default="GET",
+        choices=[
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+        ]
     )
     group_request.add_argument(
         "--data",
