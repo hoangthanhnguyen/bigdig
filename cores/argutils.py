@@ -14,8 +14,11 @@ class ArgumentParser(argparse.ArgumentParser):
         print(message)
 
 
-class PluginArgumentParser(argparse.ArgumentParser):
-    pass
+def check_delay(delay):
+    try:
+        int(delay)
+    except ValueError:
+        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % delay)
 
 
 def core_args():
@@ -46,10 +49,11 @@ def core_args():
         help="""Target URL (e.g. "http://example.com/vuln.php?id=1")"""
     )
     group_target.add_argument(
-        "-r",
-        metavar="REQUESTFILE",
-        dest="requestfile",
-        help="Load HTTP request from a file"
+        "-us",
+        "--urls",
+        metavar="LIST URLS",
+        dest="list_urls",
+        help="Load URLs from a wordlist"
     )
     group_request = parser.add_argument_group("Request")
     group_request.add_argument(
@@ -65,7 +69,8 @@ def core_args():
         "--headers",
         metavar="HEADERS",
         dest="headers",
-        help="""Extra headers (e.g. "X-Forwarded-For: 127.0.0.1")"""
+        help="""Extra headers. e.g. "{'X-Forwarded-For': '127.0.0.1', 'projectName': 'zhikovapp', 'Authorization': 
+        'Bearer HZCdsf='}" """
     )
     group_request.add_argument(
         "--method",
@@ -96,7 +101,8 @@ def core_args():
         "--delay",
         metavar="DELAY",
         dest="delay",
-        help="Delay in seconds between each HTTP request"
+        help="Delay in seconds between each HTTP request",
+        type=check_delay
     )
 
     return parser
