@@ -1,4 +1,4 @@
-from argutils import core_args
+from cores import argutils
 import re
 import os.path
 
@@ -55,18 +55,25 @@ def check_target(url, list_urls):
 
 # TODO check headers
 def check_headers(headers, user_agent, cookie):
-    if type(headers) == dict:
-        if headers["cookie"] or headers["Cookie"]:
+    if headers:
+        if type(headers) != dict:
+            print("""[x] Headers invalid format! e.g. "{'X-Forwarded-For': '127.0.0.1', 'projectName': 'zhikovapp', 
+                'Authorization': 'Bearer HZCdsf='}" """)
+        elif headers["cookie"] or headers["Cookie"]:
             print("[x] Use --cookie for cookie header!")
         elif headers["user-agent"] or headers["User-agent"]:
             print("[x] Use -A or --user-agent for user agent header!")
         else:
-            headers["User-agent"] = user_agent
-            headers["Cookie"] = cookie
-            return headers
+            headers.update({"User-agent": user_agent})
+            headers.update({"Cookie": cookie})
     else:
-        print("""[x] Headers invalid format! e.g. "{'X-Forwarded-For': '127.0.0.1', 'projectName': 'zhikovapp', 
-        'Authorization': 'Bearer HZCdsf='}" """)
+        headers = {}
+        headers["User-agent"] = user_agent
+        if cookie:
+            headers["Cookie"] = cookie
+        else:
+            pass
+    return headers
 
 
 # TODO check data

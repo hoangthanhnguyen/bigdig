@@ -49,3 +49,4 @@ class Check(Scanner):
 
     def gen_payload(self):
         pass
+
