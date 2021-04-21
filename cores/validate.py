@@ -2,7 +2,7 @@ from argutils import core_args
 import re
 import os.path
 
-args = core_args().parse_args()
+
 # regex for validate url
 # https://stackoverflow.com/a/7160778/14934923
 regex = re.compile(
@@ -71,7 +71,8 @@ def check_headers(headers, user_agent, cookie):
 
 # TODO check data
 def check_data(data):
-    pass
+    return data
 
 
-a = check_target(args.url, args.list_urls)
+# args = core_args().parse_args()
+# a = check_target(args.url, args.list_urls)

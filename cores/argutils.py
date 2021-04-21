@@ -57,6 +57,13 @@ def core_args():
     )
     group_request = parser.add_argument_group("Request")
     group_request.add_argument(
+        "-p",
+        "--param",
+        metavar="POINT INJECT",
+        dest="point_inject",
+        help="point for inject payload"
+    )
+    group_request.add_argument(
         "-A",
         "--user-agent",
         metavar="AGENT",
@@ -108,6 +115,6 @@ def core_args():
     return parser
 
 
-if __name__ == "__main__":
-    args = core_args()
-    args.print_help()
+# if __name__ == "__main__":
+#     args = core_args()
+#     args.print_help()
