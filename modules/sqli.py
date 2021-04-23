@@ -1,4 +1,5 @@
 from cores.base_module import Scanner
+import urllib
 
 
 class Check(Scanner):
@@ -48,5 +49,12 @@ class Check(Scanner):
         }
 
     def gen_payload(self):
-        pass
+        special_characters = """[@_!#$%^&*()"<>?/\|}{~:].,';"""
+        payloads = []
+        for i in special_characters:
+            payloads.append(i)
+        for i in payloads.copy():
+            # https://stackoverflow.com/a/5607708/14934923
+            payloads.append(urllib.parse.quote(i))
+        return payloads
 

@@ -1,12 +1,13 @@
 import requests
 
-def send_request_get(url, header, data):
+def send_request_get(url, header, data, *proxy):
     """
 
     :rtype: object
     """
     s = requests.Session()
-    response = s.get(url=url, headers=header, data=data)
+    # s.proxies.update({list(proxy.keys())[0]: list(proxy.values())[0]})
+    response = s.get(url=url, headers=header, params=data)
     return response
 
 def send_request_post(url, header, data):

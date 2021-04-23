@@ -12,7 +12,8 @@ class Scanner(object):
             for sig in self.signatures[injection_types]:
                 match = re.findall(re.escape(sig), response)
                 if match:
-                    self.found(injection_types, url, parameter, payload)
+                    print("[*] [\033[31m%s\033[00m] [\033[4m\033[40m%s\033[00m] [\033[4m\033[31m%s\033[00m: \033[4m\033[33;1m%s\033[00m]" % (
+                        injection_types, url, parameter, payload))
                     return True
         return False
 

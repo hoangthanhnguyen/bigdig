@@ -20,6 +20,11 @@ def check_delay(delay):
     except ValueError:
         raise argparse.ArgumentTypeError("%s is an invalid positive int value" % delay)
 
+def parse_proxy(proxy):
+    proxies = {}
+    protocol, target = proxy.split("://")
+    proxies.update({protocol: proxy})
+    return proxies
 
 def core_args():
     parser = ArgumentParser()
@@ -47,7 +52,7 @@ def core_args():
         "--url",
         metavar="URL",
         dest="url",
-        help="""Target URL (e.g. "http://example.com/vuln.php?id=1")"""
+        help="""Target URL (e.g: "http://example.com/vuln.php?id=1")"""
     )
     group_target.add_argument(
         "-us",
@@ -77,7 +82,7 @@ def core_args():
         "--headers",
         metavar="HEADERS",
         dest="headers",
-        help="""Extra headers. e.g. "{'X-Forwarded-For': '127.0.0.1', 'projectName': 'zhikovapp', 'Authorization': 
+        help="""Extra headers. e.g: "{'X-Forwarded-For': '127.0.0.1', 'projectName': 'zhikovapp', 'Authorization': 
         'Bearer HZCdsf='}" """
     )
     group_request.add_argument(
@@ -97,13 +102,13 @@ def core_args():
         "--data",
         metavar="DATA",
         dest="data",
-        help="""Data string to be sent through POST (e.g. "id=1")"""
+        help="""Data string to be sent through POST (e.g: "id=1")"""
     )
     group_request.add_argument(
         "--cookie",
         metavar="COOKIE",
         dest="cookie",
-        help="""HTTP Cookie header value (e.g. "PHPSESSID=a6s8492..")"""
+        help="""HTTP Cookie header value (e.g: "PHPSESSID=a6s8492..")"""
     )
     group_request.add_argument(
         "--delay",
@@ -111,6 +116,13 @@ def core_args():
         dest="delay",
         help="Delay in seconds between each HTTP request",
         type=check_delay
+    )
+    group_request.add_argument(
+        "--proxy",
+        metavar="PROTOCOL:IP:PORT",
+        dest="proxy",
+        help="Proxy for requests (e.g: http://127.0.0.1:8080)",
+        type=parse_proxy
     )
 
     return parser
