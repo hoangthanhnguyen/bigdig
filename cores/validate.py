@@ -1,6 +1,7 @@
 from cores import argutils
 import re
 import os.path
+import importlib
 
 
 # regex for validate url
@@ -64,12 +65,14 @@ def check_target(url, list_urls):
         else:
             print("[x] File " + str(list_urls) + " does not exist!")
 
-    else:
-        if url:
+    elif url:
             if re.match(regex, url):
                 urls.append(url)
             else:
                 print("[x] Invalid url. Example: https://www.example.com")
+
+    else:
+        print("[x] The following arguments are required: -u/--url or -us/--urls")
     return urls
 
 
@@ -100,6 +103,24 @@ def check_headers(headers, user_agent, cookie):
 def check_data(data):
     return parse_params(data)
 
+# check argument -l/--list
+def list_modules(list):
+    if list:
+        from os import listdir
+        from os.path import isfile, join
+        all_modules = [f for f in listdir("modules") if isfile(join("modules", f))]
+        print("List all modules:\n")
+        for i in all_modules:
+            if "__" in i:
+                continue
+            elif "_" in i:
+                continue
+            else:
+                print("[+] " + i.replace(".py", ""))
+
+        exit()
+    else:
+        return
 
 # args = core_args().parse_args()
 # a = check_target(args.url, args.list_urls)

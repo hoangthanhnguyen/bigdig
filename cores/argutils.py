@@ -1,6 +1,5 @@
 import argparse
 from argparse import ArgumentError
-import sys
 
 
 class ArgumentParser(argparse.ArgumentParser):
@@ -32,7 +31,6 @@ def core_args():
     group_core.add_argument(
         "-m",
         "--module",
-        required=True,
         metavar="Module",
         dest="module",
         help="Select module"

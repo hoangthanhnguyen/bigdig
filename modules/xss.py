@@ -33,9 +33,9 @@ def send_request(url, headers, params, body, point_inject, args):
     params.update({point_inject: payload})
 
     if args.method == "GET":
-        r = requests.get(url, headers = headers, params=params)
+        r = requests.get(url, headers=headers, params=params)
     else:
-        r = requests.post(url, headers = headers, data=params)
+        r = requests.post(url, headers=headers, data=params)
 
     try:
         if re.search(re.escape(payload), r.text):
@@ -65,7 +65,7 @@ def send_request(url, headers, params, body, point_inject, args):
 def analysis(url, headers, params, point_inject, args):
     body = "<script>alert(1);</script>"
     blacklist = []
-    status, res_payload = send_request(url, headers,  params, body, point_inject, args)
+    status, res_payload = send_request(url, headers, params, body, point_inject, args)
 
     if status == XCheck.payload_encoded:
         print_debug("Server encoded request", body, res_payload)
@@ -170,4 +170,4 @@ def create_session(args):
                 analysis(url, args.headers, params, key, args)
         else:
             for key in args.point_inject:
-                analysis(url, args.headers,  params, key, args)
+                analysis(url, args.headers, params, key, args)

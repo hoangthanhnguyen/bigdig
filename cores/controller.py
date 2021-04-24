@@ -2,6 +2,8 @@ from cores import validate
 from cores import fuzzer
 from cores import argutils
 import importlib
+from cores import progress
+from cores import utils
 
 
 # Control modules
@@ -30,27 +32,39 @@ def run(module, method, urls, headers, data, point_inject, *proxy):
             for url in urls:
                 if method == "GET":
                     try:
+                        full_url = url
                         url, data = url.split("?")
                     except ValueError:
                         print("[x] GET request need parameters!")
                         return
                     data = data.split("&")
                     params = parse_params(data)
+                    checking = 0
                     for payload in payloads:
-                        params.update({point_inject: payload})
-                        response = fuzzer.send_request_get(url, headers, params, proxy)
-                        if module.check(url, payload, response.text, point_inject):
-                            print("Yes")
-                            break
-                        else:
-                            print("No")
+                        checking += 1
+                        progress.progress_bar(f"Checking: {checking}/{len(payloads)} payloads")
+                        for pos in point_inject:
+                            params.update({pos: payload})
+                            response = fuzzer.send_request_get(url, headers, params, proxy)
+                            if module.check(url, payload, response.text, point_inject):
+                                utils.print_vulnerable(full_url, payload, point_inject)
+                            else:
+                                continue
 
                 elif method == "POST":
                     data = data.split("&")
                     params = parse_params(data)
+                    checking = 0
                     for payload in payloads:
-                        params.update({point_inject: payload})
-                        response = fuzzer.send_request_post(url, headers, params)
+                        checking += 1
+                        progress.progress_bar(f"Checking: {checking}/{len(payloads)} payloads")
+                        for pos in point_inject:
+                            params.update({point_inject: payload})
+                            response = fuzzer.send_request_post(url, headers, params)
+                            if module.check(url, payload, response.text, point_inject):
+                                utils.print_vulnerable(full_url, payload, point_inject)
+                            else:
+                                continue
                 else:
                     # This statement for request PUT or DELETE
                     # https://stackoverflow.com/a/15367806/14934923
@@ -61,10 +75,6 @@ def run(module, method, urls, headers, data, point_inject, *proxy):
             return
     else:
         return
-    try:
-        return response
-    except UnboundLocalError:
-        print("[x] Do you have url & data?")
 
 
 

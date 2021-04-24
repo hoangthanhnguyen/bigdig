@@ -1,12 +1,12 @@
 
 
-def print_vulnerable(uri, payload="", pos=""):
+def print_vulnerable(uri, payload="", point_inject=""):
     # Bright Magenta
     print(f"  [\033[96m*\033[0m] \033[96m{uri}\033[0m is\033[91m vulnerable\033[0m")
     if payload:
         print(f"  Payload: \033[95m{payload}\033[0m")
-    if pos:
-        print(f"  Parameter: \033[96m{pos}\033[0m")
+    if point_inject:
+        print(f"  Parameter: \033[96m{point_inject}\033[0m")
 
 
 def print_not_vulnerable(url):
