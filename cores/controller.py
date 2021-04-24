@@ -48,6 +48,7 @@ def run(module, method, urls, headers, data, point_inject, *proxy):
                             response = fuzzer.send_request_get(url, headers, params, proxy)
                             if module.check(url, payload, response.text, point_inject):
                                 utils.print_vulnerable(full_url, payload, point_inject)
+                                exit()
                             else:
                                 continue
 
@@ -63,6 +64,7 @@ def run(module, method, urls, headers, data, point_inject, *proxy):
                             response = fuzzer.send_request_post(url, headers, params)
                             if module.check(url, payload, response.text, point_inject):
                                 utils.print_vulnerable(full_url, payload, point_inject)
+                                exit()
                             else:
                                 continue
                 else:
