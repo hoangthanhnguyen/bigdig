@@ -49,12 +49,9 @@ class Check(Scanner):
         }
 
     def gen_payload(self):
-        special_characters = """[@_!#$%^&*()"<>?/\|}{~:].,';"""
-        payloads = []
-        for i in special_characters:
-            payloads.append(i)
-        for i in payloads.copy():
-            # https://stackoverflow.com/a/5607708/14934923
-            payloads.append(urllib.parse.quote(i))
+        with open('resources/sqli_payloads', 'r') as f:
+            payloads = f.readlines()
+            for i in payloads:
+                i.replace("\n", "")
         return payloads
 
