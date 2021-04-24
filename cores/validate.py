@@ -14,7 +14,27 @@ regex = re.compile(
     r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
 
-# TODO check module
+def parse_params(data):
+    params = {}
+    for param in data:
+        key, value = param.split("=")
+        params.update({key: value})
+    return params
+
+
+def parse_param_from_url(url):
+    if "?" not in url:
+        return None
+    data = url.split("?")[1].split("&")
+    # TODO support DOM
+    return url.split("?")[0], parse_params(data)
+
+def check_param(point_inject):
+    if point_inject:
+        point_inject = point_inject.split(",")
+    return point_inject
+
+
 def check_module(module_name):
     try:
         import importlib
@@ -24,7 +44,7 @@ def check_module(module_name):
 
 
 # TODO check request from file
-# TODO check target
+
 def check_target(url, list_urls):
     urls = []
     if list_urls:
@@ -78,7 +98,7 @@ def check_headers(headers, user_agent, cookie):
 
 # TODO check data
 def check_data(data):
-    return data
+    return parse_params(data)
 
 
 # args = core_args().parse_args()
