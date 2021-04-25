@@ -1,11 +1,23 @@
 # from cores import *
 import importlib
+from pyfiglet import Figlet
+import shutil
+
+
 
 from cores import controller
 from cores import validate
 # from modules import *
 from cores.argutils import core_args
 import sys
+
+def show_banner():
+    f = Figlet(font='standard')
+    print(*[x.center(shutil.get_terminal_size().columns) for x in f.renderText("b1gdIg").split("\n")],sep="\n")
+    print("\033[91m--------\033[32m\033[32mAuthor:\033[0m \033[96mNguyễn Hoàng Thành\033[91m--------\033[0m")
+    print("\033[91m---\033[32mEmail: \033[96msmith.nguyenhoangthanh@gmail.com\033[91m---\033[0m")
+    # print("-----[ Gitlab:\033[94m https://nest.parrotsec.org/packages/tools/pxss/\033[0m ]---")
+
 
 args = core_args().parse_args()
 args.point_inject = validate.check_param(args.point_inject)
@@ -26,6 +38,7 @@ class UserOpts(object):
 
 
 if __name__ == "__main__":
+    show_banner()
     flags = core_args()
     try:
         sys.argv[1]

@@ -73,7 +73,7 @@ def core_args():
         metavar="AGENT",
         dest="user_agent",
         help="HTTP User-Agent header value (default: bigdig/1.0)",
-        default="bigdig/1.0"
+        default="bigdig/1.0.0"
     )
     group_request.add_argument(
         "-H",
