@@ -144,7 +144,6 @@ def create_session(args):
     #     session.cookies.set(args.cookie)
 
     # TODO add more for session
-
     for url in validate.check_target(args.url, args.list_urls):
         url = url.replace("\n", "")
         print()
@@ -163,7 +162,7 @@ def create_session(args):
             if not args.data:
                 raise ValueError("No parameter for Post method")
             else:
-                params = controller.parse_params([args.data])
+                params = controller.parse_params(args.data.split("&"))
 
         if not args.point_inject:
             for key in params.keys():

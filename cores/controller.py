@@ -60,10 +60,10 @@ def run(module, method, urls, headers, data, point_inject, *proxy):
                         checking += 1
                         progress.progress_bar(f"Checking: {checking}/{len(payloads)} payloads")
                         for pos in point_inject:
-                            params.update({point_inject: payload})
+                            params.update({pos: payload})
                             response = fuzzer.send_request_post(url, headers, params)
                             if module.check(url, payload, response.text, point_inject):
-                                utils.print_vulnerable(full_url, payload, point_inject)
+                                utils.print_vulnerable(url, payload, point_inject)
                                 exit()
                             else:
                                 continue

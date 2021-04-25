@@ -55,7 +55,7 @@ def check_target(url, list_urls):
                     urls = f.readlines()
                     for i in range(len(urls)):
                         if re.match(regex, urls[i]):
-                            urls.append(urls[i])
+                            continue
                         else:
                             print("[x] Invalid url: " + urls[
                                 i] + " Example: https://www.example.com or http://www.example.com")
