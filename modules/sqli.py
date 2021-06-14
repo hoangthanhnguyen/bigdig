@@ -1,5 +1,4 @@
 from cores.base_module import Scanner
-import urllib
 
 
 class Check(Scanner):

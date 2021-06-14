@@ -33,6 +33,8 @@ def parse_param_from_url(url):
 def check_param(point_inject):
     if point_inject:
         point_inject = point_inject.split(",")
+    else:
+        print("[x] Invalid point inject!")
     return point_inject
 
 
@@ -90,8 +92,7 @@ def check_headers(headers, user_agent, cookie):
             headers.update({"User-agent": user_agent})
             headers.update({"Cookie": cookie})
     else:
-        headers = {}
-        headers["User-agent"] = user_agent
+        headers = {"User-agent": user_agent}
         if cookie:
             headers["Cookie"] = cookie
         else:
